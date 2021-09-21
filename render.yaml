@@ -1,0 +1,21 @@
+databases:
+- name: my-codimd-db
+  ipAllowList: []
+
+services:
+- type: web
+  name: my-codimd
+  env: docker
+  envVars:
+  - key: CMD_DB_URL
+    fromDatabase:
+      name: my-codimd-db
+      property: connectionString
+  - key: CMD_PROTOCOL_USESSL
+    value: true
+  - key: CMD_IMAGE_UPLOAD_TYPE
+    value: filesystem
+  disk:
+    name: my-codimd-upload
+    mountPath: /home/hackmd/app/public/uploads
+    sizeGB: 1
